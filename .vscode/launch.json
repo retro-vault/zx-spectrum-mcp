@@ -1,0 +1,77 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "server (stdio, verbose)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/bin/zx-spectrum-mcp-debug",
+            "args": ["--verbose"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "build (debug, sanitizers)",
+            "setupCommands": [
+                {
+                    "description": "pretty printing for STL containers",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "server with a ROM",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/bin/zx-spectrum-mcp-debug",
+            "args": ["--verbose", "--rom", "${input:romPath}"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "MIMode": "gdb",
+            "preLaunchTask": "build (debug, sanitizers)"
+        },
+        {
+            "name": "debug a test suite",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/debug/tests/${input:testName}",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "MIMode": "gdb",
+            "preLaunchTask": "test",
+            "setupCommands": [
+                {
+                    "description": "pretty printing for STL containers",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "testName",
+            "type": "pickString",
+            "description": "which suite to debug",
+            "options": [
+                "test_cpu_timing",
+                "test_contention",
+                "test_display",
+                "test_json",
+                "test_keyboard",
+                "test_mcp",
+                "test_png",
+                "test_snapshot"
+            ],
+            "default": "test_cpu_timing"
+        },
+        {
+            "id": "romPath",
+            "type": "promptString",
+            "description": "path to a 16K ZX Spectrum ROM image",
+            "default": "48.rom"
+        }
+    ]
+}

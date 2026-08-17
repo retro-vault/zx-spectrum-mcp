@@ -1,0 +1,5 @@
+# Build artifacts. Everything the build produces lives in these two
+# directories and nowhere else; see docs/standards/CPP-CODING-STYLE.md.
+/build/
+/bin/
+
